@@ -130,6 +130,25 @@ rebuild() {
         -f 'permitify/Dockerfile' \
         ..
 }
+
+clean() {
+    echo -e "\nRemoving libindy image ..."
+    docker rmi -f 'libindy'
+
+    echo -e "\nRemoving python-libindy image ..."
+    docker rmi -f 'python-libindy'
+
+    echo -e "\nRemoving permitify image ..."
+    docker rmi -f 'permitify'
+
+    echo -e "\nRemoving volumes ..."
+    docker volume rm -f 'worksafe_bc_wallet'
+    docker volume rm -f 'bc_registries_wallet'
+    docker volume rm -f 'ministry_of_finance_wallet'
+    docker volume rm -f 'fraser_valley_health_authority_wallet'
+    docker volume rm -f 'city_of_surrey_wallet'
+    docker volume rm -f 'liquor_control_and_licensing_branch_wallet'
+}
 # =================================================================================================================
 
 pushd ${SCRIPT_HOME} >/dev/null
@@ -153,6 +172,9 @@ case "$1" in
     ;;
   shell)
       docker-compose run web bash
+    ;;
+  clean)
+      clean
     ;;
   *)
       usage;;
