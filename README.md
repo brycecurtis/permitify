@@ -67,6 +67,8 @@ http://138.197.170.136/register?seed=worksafe_bc_agent_00000000000000
 
 ### On dev machines
 
+- The first time you run './manage start' you will get a WalletNotFoundError - change the schema version number to something random in src/von_connector/proof.py:40 and schema.py:39, then run it again.
+
 - If you get WalletNotFoundError when submitting a claim, try incrementing the schema version and fully restarting the server. This will re-publish the schema and related claim definition which should fix this. This can occur if the wallet didn't persist properly from a previous restart and the definition cannot be found in the wallet. **This will also be needed on first run.**
 
 - For Django's hot-reloading to work in development, the src directory needs to mounted as a volume. This only works when one "service" is defined in the docker-compose.yml since multiple services will clobber each other's config files that get copied in.
